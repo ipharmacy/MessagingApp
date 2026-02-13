@@ -189,12 +189,26 @@ struct ConversationRow: View {
                         
                         Text(conversation.lastMessageContent)
                             .font(.system(size: 15, design: .rounded))
-                            .foregroundColor(.secondary)
+                            .foregroundColor(conversation.unreadCount > 0 ? .primary : .secondary)
+                            .fontWeight(conversation.unreadCount > 0 ? .semibold : .regular)
                             .lineLimit(1)
                     } else {
                         Text("No messages yet")
                            .font(.system(size: 15, design: .rounded))
                            .foregroundColor(.secondary)
+                    }
+                    
+                    Spacer()
+                    
+                    if conversation.unreadCount > 0 {
+                        Text("\(conversation.unreadCount)")
+                            .font(.caption2)
+                            .fontWeight(.bold)
+                            .foregroundColor(.white)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 4)
+                            .background(Color.blue)
+                            .clipShape(Capsule())
                     }
                 }
             }

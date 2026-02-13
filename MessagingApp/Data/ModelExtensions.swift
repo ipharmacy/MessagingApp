@@ -114,4 +114,9 @@ extension Conversation {
         
         return lastMessage.content ?? "No content"
     }
+    
+    /// The number of unread messages from the contact in this conversation.
+    var unreadCount: Int {
+        messagesArray.filter { $0.sender == .contact && $0.status != .read }.count
+    }
 }

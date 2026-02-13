@@ -67,6 +67,22 @@ class ChatViewModel: ObservableObject {
     
     private func loadMessages() {
         messages = conversation.messagesArray
+        markAllAsRead()
+    }
+    
+    /// Marks all incoming messages in this conversation as read.
+    func markAllAsRead() {
+        let unread = messages.filter { $0.sender == .contact && $0.status != .read }
+        guard !unread.isEmpty else { return }
+        
+        for message in unread {
+            message.status = .read
+        }
+        
+        // Pick any message to trigger a repository update/save
+        if let first = unread.first {
+            repository.updateMessage(first)
+        }
     }
     
     // MARK: - Actions
